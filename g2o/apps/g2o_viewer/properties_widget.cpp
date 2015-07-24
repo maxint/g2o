@@ -113,7 +113,7 @@ void PropertiesWidget::applyProperties()
       prop->setValue(checkItem->checkState() == Qt::Checked);
     } else {
       QLineEdit* editor = dynamic_cast<QLineEdit*>(tableWidget->cellWidget(r, 1));
-      bool status = baseProp->fromString(editor->text().toStdString());
+      bool status = baseProp->fromString(editor->text().toLocal8Bit().constData());
       if (! status) {
         cerr << "Warning: unable to set property " << baseProp->name() << endl;
       }

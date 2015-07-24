@@ -65,10 +65,10 @@ void MainWindow::on_actionSave_triggered(bool)
 {
   QString filename = QFileDialog::getSaveFileName(this, "Save g2o file", "", "g2o files (*.g2o)");
   if (! filename.isNull()) {
-    ofstream fout(filename.toStdString().c_str());
+    ofstream fout(filename.toLocal8Bit().constData());
     viewer->graph->save(fout);
     if (fout.good())
-      cerr << "Saved " << filename.toStdString() << endl;
+      cerr << "Saved " << filename.toLocal8Bit().constData() << endl;
     else
       cerr << "Error while saving file" << endl;
   }
@@ -228,8 +228,8 @@ void MainWindow::updateDisplayedSolvers()
 
 bool MainWindow::load(const QString& filename)
 {
-  ifstream ifs(filename.toStdString().c_str());
-  if (! ifs)
+  ifstream ifs(filename.toLocal8Bit().constData());
+  if (!ifs)
     return false;
   viewer->graph->clear();
   bool loadStatus = viewer->graph->load(ifs);
@@ -279,7 +279,7 @@ bool MainWindow::allocateSolver(bool& allocatedNewSolver)
 
   // create the new algorithm
   OptimizationAlgorithmFactory* solverFactory = OptimizationAlgorithmFactory::instance();
-  _currentSolver = solverFactory->construct(strSolver.toStdString(), _currentOptimizationAlgorithmProperty);
+  _currentSolver = solverFactory->construct(strSolver.toLocal8Bit().constData(), _currentOptimizationAlgorithmProperty);
   viewer->graph->setAlgorithm(_currentSolver);
 
   _lastSolver = currentIndex;
@@ -319,9 +319,9 @@ void MainWindow::setRobustKernel()
 
   if (robustKernel) {
     QString strRobustKernel = coRobustKernel->currentText();
-    AbstractRobustKernelCreator* creator = RobustKernelFactory::instance()->creator(strRobustKernel.toStdString());
+    AbstractRobustKernelCreator* creator = RobustKernelFactory::instance()->creator(strRobustKernel.toLocal8Bit().constData());
     if (! creator) {
-      cerr << strRobustKernel.toStdString() << " is not a valid robust kernel" << endl;
+      cerr << strRobustKernel.toLocal8Bit().constData() << " is not a valid robust kernel" << endl;
       return;
     }
     for (SparseOptimizer::EdgeSet::const_iterator it = optimizer->edges().begin(); it != optimizer->edges().end(); ++it) {
@@ -353,7 +353,7 @@ bool MainWindow::loadFromFile(const QString& filename)
 {
   viewer->graph->clear();
   bool loadStatus = load(filename);
-  cerr << "loaded " << filename.toStdString() << " with " << viewer->graph->vertices().size()
+  cerr << "loaded " << filename.toLocal8Bit().constData() << " with " << viewer->graph->vertices().size()
     << " vertices and " << viewer->graph->edges().size() << " measurements" << endl;
   viewer->updateGL();
   fixGraph();
@@ -423,7 +423,7 @@ void MainWindow::on_actionSave_Screenshot_triggered(bool)
     }
     viewer->setSnapshotFormat(format);
     viewer->saveSnapshot(filename);
-    cerr << "saved snapshot " << filename.toStdString() << "(" << format.toStdString() << ")" << endl;
+    cerr << "saved snapshot " << filename.toLocal8Bit().constData() << "(" << format.toLocal8Bit().constData() << ")" << endl;
   }
 }
 
@@ -435,7 +435,7 @@ void MainWindow::on_actionLoad_Viewer_State_triggered(bool)
     viewer->restoreStateFromFile();
     viewer->setStateFileName(QString::null);
     viewer->updateGL();
-    cerr << "Loaded state from " << filename.toStdString() << endl;
+    cerr << "Loaded state from " << filename.toLocal8Bit().constData() << endl;
   }
 }
 
@@ -446,7 +446,7 @@ void MainWindow::on_actionSave_Viewer_State_triggered(bool)
     viewer->setStateFileName(filename);
     viewer->saveStateToFile();
     viewer->setStateFileName(QString::null);
-    cerr << "Saved state to " << filename.toStdString() << endl;
+    cerr << "Saved state to " << filename.toLocal8Bit().constData() << endl;
   }
 }
 

@@ -43,7 +43,7 @@ void MainWindow::on_actionLoad_triggered(bool)
   viewer->graph->clear();
   QString filename = QFileDialog::getOpenFileName(this, "Load g2o file", "", "g2o files (*.g2o);;All Files (*)");
   if (! filename.isNull()) {
-    ifstream ifs(filename.toStdString().c_str());
+    ifstream ifs(filename.toLatin1().constData());
     viewer->graph->load(ifs);
     cerr << "Graph loaded with " << viewer->graph->vertices().size() << " vertices and "
       << viewer->graph->edges().size() << " measurments" << endl;
@@ -56,10 +56,10 @@ void MainWindow::on_actionSave_triggered(bool)
 {
   QString filename = QFileDialog::getSaveFileName(this, "Save g2o file", "", "g2o files (*.g2o)");
   if (! filename.isNull()) {
-    ofstream fout(filename.toStdString().c_str());
+    ofstream fout(filename.toLocal8Bit().constData());
     viewer->graph->save(fout);
     if (fout.good())
-      cerr << "Saved " << filename.toStdString() << endl;
+      cerr << "Saved " << filename.toLocal8Bit().constData() << endl;
     else
       cerr << "Error while saving file" << endl;
   }
