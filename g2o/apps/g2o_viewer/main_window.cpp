@@ -198,7 +198,7 @@ void MainWindow::updateDisplayedSolvers()
     for (OptimizationAlgorithmFactory::CreatorList::const_iterator it = knownSolvers.begin(); it != knownSolvers.end(); ++it) {
       const OptimizationAlgorithmProperty& sp = (*it)->property();
       if (sp.type == varType) {
-        coOptimizer->addItem(QString::fromStdString(sp.name));
+        coOptimizer->addItem(QString::fromLocal8Bit(sp.name.c_str()));
         _knownSolvers.push_back(sp);
       }
     }
@@ -220,7 +220,7 @@ void MainWindow::updateDisplayedSolvers()
     }
     const vector<OptimizationAlgorithmProperty>& vsp = it->second;
     for (size_t j = 0; j < vsp.size(); ++j) {
-      coOptimizer->addItem(QString::fromStdString(vsp[j].name));
+      coOptimizer->addItem(QString::fromLocal8Bit(vsp[j].name.c_str()));
       _knownSolvers.push_back(vsp[j]);
     }
   }
@@ -456,6 +456,6 @@ void MainWindow::updateRobustKernels()
   std::vector<std::string> kernels;
   RobustKernelFactory::instance()->fillKnownKernels(kernels);
   for (size_t i = 0; i < kernels.size(); ++i) {
-    coRobustKernel->addItem(QString::fromStdString(kernels[i]));
+    coRobustKernel->addItem(QString::fromLocal8Bit(kernels[i].c_str()));
   }
 }

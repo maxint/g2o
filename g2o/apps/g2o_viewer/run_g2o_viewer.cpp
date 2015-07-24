@@ -74,7 +74,7 @@ int RunG2OViewer::run(int argc, char** argv, CommandArgs& arg)
   optimizer->addPreIterationAction(&guiHyperGraphAction);
 
   if (inputFilename.size() > 0) {
-    mw.loadFromFile(QString::fromStdString(inputFilename));
+    mw.loadFromFile(QString::fromLocal8Bit(inputFilename.c_str()));
   }
 
   QCoreApplication* myapp = QApplication::instance();

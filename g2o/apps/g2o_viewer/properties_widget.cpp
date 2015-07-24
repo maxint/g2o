@@ -63,7 +63,7 @@ void PropertiesWidget::updateDisplayedProperties()
   for (PropertyMap::PropertyMapIterator it = properties->begin(); it != properties->end(); ++it, ++r) {
 
     QTableWidgetItem* textItem = new QTableWidgetItem;
-    textItem->setText(QString::fromStdString(humanReadablePropName(it->first)));
+    textItem->setText(QString::fromLocal8Bit(humanReadablePropName(it->first).c_str()));
     textItem->setFlags(textItem->flags() & ~Qt::ItemIsEditable);
     tableWidget->setItem(r, 0, textItem);
     _propNames.push_back(it->first);
@@ -80,7 +80,7 @@ void PropertiesWidget::updateDisplayedProperties()
       tableWidget->setItem(r, 1, checkItem);
     } else {
       QLineEdit* editor = new QLineEdit(tableWidget);
-      editor->setText(QString::fromStdString(it->second->toString()));
+      editor->setText(QString::fromLocal8Bit(it->second->toString().c_str()));
       if (dynamic_cast<Property<int>*>(it->second)) {
         editor->setValidator(new QIntValidator(editor));
       }
