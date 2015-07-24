@@ -15,7 +15,7 @@
 #ifdef _MSC_VER
 // We are using a Microsoft compiler:
 #ifdef G2O_SHARED_LIBS
-#ifdef tutorial_slam2d_library_EXPORTS
+#ifdef tutorial_slam2d_types_library_EXPORTS
 #define G2O_TUTORIAL_SLAM2D_API __declspec(dllexport)
 #else
 #define G2O_TUTORIAL_SLAM2D_API __declspec(dllimport)
