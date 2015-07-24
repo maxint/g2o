@@ -1,3 +1,4 @@
 build*
 lib
 bin
+/g2o/config.h

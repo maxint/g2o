@@ -10,11 +10,13 @@ SET(g2o_C_FLAGS)
 SET(g2o_CXX_FLAGS)
 
 # default built type
-IF(NOT CMAKE_BUILD_TYPE)
-  SET(CMAKE_BUILD_TYPE Release CACHE STRING
-      "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
-      FORCE)
-ENDIF(NOT CMAKE_BUILD_TYPE)
+IF(UNIX)
+  IF(NOT CMAKE_BUILD_TYPE)
+    SET(CMAKE_BUILD_TYPE Release CACHE STRING
+        "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+        FORCE)
+  ENDIF(NOT CMAKE_BUILD_TYPE)
+ENDIF(UNIX)
 
 # postfix, based on type
 SET(CMAKE_DEBUG_POSTFIX "_d" CACHE STRING "postfix applied to debug build of libraries")
@@ -51,7 +53,7 @@ endif(MSVC90)
 # avoid the problem of loading both the built and installed versions
 # of the shared targets
 IF(APPLE)
-  SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE) 
+  SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
   SET(CMAKE_INSTALL_RPATH "")
 ENDIF(APPLE)
 
@@ -103,6 +105,9 @@ IF(ANDROID)
   MESSAGE(STATUS "Cross compiling for Android")
 ENDIF()
 
+# For GUI
+FIND_PACKAGE(Qt4)
+
 # For building the CHOLMOD / CSPARSE solvers
 FIND_PACKAGE(Cholmod)
 FIND_PACKAGE(BLAS)
@@ -152,9 +157,6 @@ IF (OPENGL_FOUND AND G2O_USE_OPENGL)
   MESSAGE(STATUS "Compiling with OpenGL support")
 ENDIF()
 
-# For building the GUI
-FIND_PACKAGE(QGLViewer)
-
 # shall we build the core apps using the library
 SET(G2O_BUILD_APPS ON CACHE BOOL "Build g2o apps")
 IF(G2O_BUILD_APPS)
@@ -175,7 +177,7 @@ ENDIF(G2O_BUILD_EXAMPLES)
 IF(CMAKE_COMPILER_IS_GNUCXX)
   OPTION (BUILD_WITH_MARCH_NATIVE "Build with \"-march native\"" ON)
   MESSAGE(STATUS "Compiling with GCC")
-  
+
   IF(NOT ${ARCH} MATCHES arm)
     # Generic settings for optimisation
     SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -msse4.2")
@@ -187,8 +189,8 @@ IF(CMAKE_COMPILER_IS_GNUCXX)
 
   # OS X
   #IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    #SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}") 
-    #SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}") 
+    #SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
+    #SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")
   #ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   # Linux
   IF(BUILD_WITH_MARCH_NATIVE AND NOT ${ARCH} MATCHES arm AND ${CMAKE_SYSTEM_NAME} MATCHES "Linux")

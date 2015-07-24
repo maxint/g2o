@@ -39,14 +39,14 @@ namespace {
     public:
       StandardCamera() : _standard(true) {};
 
-      float zNear() const {
+      virtual qreal zNear() const {
         if (_standard) 
           return 0.001f; 
         else 
           return Camera::zNear(); 
       }
 
-      float zFar() const
+      virtual qreal zFar() const
       {  
         if (_standard) 
           return 1000.0f; 
