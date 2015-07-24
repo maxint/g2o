@@ -8,7 +8,7 @@ set(QT_USE_QTOPENGL TRUE)
 set(QT_USE_QTXML TRUE)
 include(${QT_USE_FILE})
 
-file(GLOB HEADERS *.h)
+file(GLOB HEADERS *.h *.hpp)
 file(GLOB SOURCES *.cpp)
 
 QT4_WRAP_UI(UI_HEADERS ImageInterface.ui)
@@ -24,6 +24,7 @@ target_include_directories(${PROJECT_NAME}
   PRIVATE ${CMAKE_CURRENT_BINARY_DIR}
   )
 target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} ${OPENGL_LIBRARY})
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${LIB_PREFIX}ext_${PROJECT_NAME})
 
 # Install
 install(TARGETS ${PROJECT_NAME}

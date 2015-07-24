@@ -1,18 +1,18 @@
-ADD_LIBRARY(freeglut_minimal ${G2O_LIB_TYPE}
+file(GLOB HEADERS *.h *.hpp)
+add_library(freeglut_minimal ${G2O_LIB_TYPE}
+  ${HEADERS}
   freeglut_font.cpp
   freeglut_stroke_mono_roman.cpp
   freeglut_stroke_roman.cpp
 )
 
-TARGET_LINK_LIBRARIES(freeglut_minimal ${OPENGL_gl_LIBRARY})
+target_link_libraries(freeglut_minimal ${OPENGL_gl_LIBRARY})
+set_target_properties(freeglut_minimal PROPERTIES OUTPUT_NAME ${LIB_PREFIX}ext_freeglut_minimal)
 
-SET_TARGET_PROPERTIES(freeglut_minimal PROPERTIES OUTPUT_NAME ${LIB_PREFIX}ext_freeglut_minimal)
-
-INSTALL(TARGETS freeglut_minimal
+# Install
+install(TARGETS freeglut_minimal
   RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
   LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
   ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
 )
-
-FILE(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
-INSTALL(FILES ${headers} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/EXTERNAL/freeglut)
+install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/EXTERNAL/freeglut)

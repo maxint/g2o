@@ -6,7 +6,7 @@ ADD_LIBRARY(csparse_extension ${G2O_LGPL_LIB_TYPE}
 )
 SET_TARGET_PROPERTIES(csparse_extension PROPERTIES OUTPUT_NAME ${LIB_PREFIX}csparse_extension)
 
-IF(BUILD_CSPARSE)
+IF(G2O_BUILD_CSPARSE)
   TARGET_LINK_LIBRARIES(csparse_extension csparse)
 ELSE()
   TARGET_LINK_LIBRARIES(csparse_extension ${CSPARSE_LIBRARY})
