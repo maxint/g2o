@@ -1,5 +1,5 @@
 # this disables the dynamic loading of libraries in the standard apps
-add_definitions(-DG2O_DISABLE_DYNAMIC_LOADING_OF_LIBRARIES)
+ADD_DEFINITIONS(-DG2O_DISABLE_DYNAMIC_LOADING_OF_LIBRARIES)
 
 ADD_EXECUTABLE(g2o_cli_application_linked
   ../g2o_cli/g2o.cpp)
@@ -23,9 +23,6 @@ INSTALL(TARGETS g2o_cli_application_linked
 
 
 IF(QT4_FOUND)
-  INCLUDE(${QT_USE_FILE})
-  INCLUDE_DIRECTORIES(${QT_INCLUDES})
-
   ADD_EXECUTABLE(g2o_viewer_linked
     ../g2o_viewer/g2o_viewer.cpp
     )

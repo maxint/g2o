@@ -3,7 +3,7 @@ INCLUDE(${QT_USE_FILE})
 QT4_WRAP_UI(UI_HEADERS base_main_window.ui base_properties_widget.ui)
 QT4_WRAP_CPP(UI_SOURCES main_window.h properties_widget.h)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${QT_INCLUDES})
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 ADD_LIBRARY(viewer_library ${G2O_LIB_TYPE}
   g2o_viewer_api.h
@@ -24,7 +24,7 @@ ADD_EXECUTABLE(g2o_viewer
 
 SET_TARGET_PROPERTIES(g2o_viewer PROPERTIES OUTPUT_NAME g2o_viewer${EXE_POSTFIX})
 
-TARGET_LINK_LIBRARIES(viewer_library core g2o_cli_library qglviewer ${QT_LIBRARIES} ${OPENGL_LIBRARY})
+TARGET_LINK_LIBRARIES(viewer_library core g2o_cli_library qglviewer)
 TARGET_LINK_LIBRARIES(viewer_library core opengl_helper)
 TARGET_LINK_LIBRARIES(g2o_viewer viewer_library)
 
